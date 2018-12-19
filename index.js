@@ -243,8 +243,13 @@ const ScrollableTabView = createReactClass({
       </Animated.ScrollView>;
     } else {
       const scenes = this._composeScenes();
+
+      //Build the key from the names of the labels in order. That way it forces a re-render if
+      //The order of the tabs changes
+      const key = this._children().reduce((acc, curr) => acc + curr.props.tabLabel, '');
+
       return <AnimatedViewPagerAndroid
-        key={this._children().length}
+        key={key}
         style={styles.scrollableContentAndroid}
         initialPage={this.props.initialPage}
         onPageSelected={this._updateSelectedPage}
